@@ -1,0 +1,9 @@
+<!-- BEGIN_INCLUDE(marvel-api:greet) -->
+    <marvel-api:greet config-ref="" friend="#[map-payload:friend]" />
+<!-- END_INCLUDE(marvel-api:greet) -->
+<!-- BEGIN_INCLUDE(marvel-api:query-processor) -->
+    <marvel-api:query-processor config-ref="" query="SELECT fieldName FROM MY_TABLE" />
+<!-- END_INCLUDE(marvel-api:query-processor) -->
+<!-- BEGIN_INCLUDE(marvel-api:add-entity) -->
+    <marvel-api:add-entity config-ref="" key="id1"/>
+<!-- END_INCLUDE(marvel-api:add-entity) -->
