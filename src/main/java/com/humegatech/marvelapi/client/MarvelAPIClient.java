@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 
-public class MarvelAPIClient {
+public class MarvelAPIClient implements MarvelAPIClientInterface {
 	private static final String DEFAULT_URL = "https://gateway.marvel.com:443/v1/public";
 	private final String apiKey;
 	private final String privateKey;
@@ -33,26 +33,32 @@ public class MarvelAPIClient {
 		client = ClientBuilder.newClient();
 	}
 
+	@Override
 	public String getCharacters() {
 		return issueGet(CHARACTERS);
 	}
 
+	@Override
 	public String getComics() {
 		return issueGet(COMICS);
 	}
 
+	@Override
 	public String getCreators() {
 		return issueGet(CREATORS);
 	}
 
+	@Override
 	public String getEvents() {
 		return issueGet(EVENTS);
 	}
 
+	@Override
 	public String getSeries() {
 		return issueGet(SERIES);
 	}
 
+	@Override
 	public String getStories() {
 		return issueGet(STORIES);
 	}
