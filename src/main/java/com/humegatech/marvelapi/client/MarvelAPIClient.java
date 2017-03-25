@@ -11,6 +11,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -35,32 +37,62 @@ public class MarvelAPIClient implements MarvelAPIClientInterface {
 
 	@Override
 	public String getCharacters() {
-		return issueGet(CHARACTERS);
+		return issueGet(CHARACTERS, null);
+	}
+
+	@Override
+	public String getCharacters(Map params) {
+		return issueGet(CHARACTERS, params);
 	}
 
 	@Override
 	public String getComics() {
-		return issueGet(COMICS);
+		return issueGet(COMICS, null);
+	}
+
+	@Override
+	public String getComics(Map params) {
+		return issueGet(COMICS, params);
 	}
 
 	@Override
 	public String getCreators() {
-		return issueGet(CREATORS);
+		return issueGet(CREATORS, null);
+	}
+
+	@Override
+	public String getCreators(Map params) {
+		return issueGet(CREATORS, params);
 	}
 
 	@Override
 	public String getEvents() {
-		return issueGet(EVENTS);
+		return issueGet(EVENTS, null);
+	}
+
+	@Override
+	public String getEvents(Map params) {
+		return issueGet(EVENTS, params);
 	}
 
 	@Override
 	public String getSeries() {
-		return issueGet(SERIES);
+		return issueGet(SERIES, null);
+	}
+
+	@Override
+	public String getSeries(Map params) {
+		return issueGet(SERIES, params);
 	}
 
 	@Override
 	public String getStories() {
-		return issueGet(STORIES);
+		return issueGet(STORIES, null);
+	}
+
+	@Override
+	public String getStories(Map params) {
+		return issueGet(STORIES, params);
 	}
 
 	/**
@@ -72,17 +104,30 @@ public class MarvelAPIClient implements MarvelAPIClientInterface {
 	 *            Path to use specifying endpoint
 	 * @return JSON response
 	 */
-	private String issueGet(final Entity entity) {
-		final String ts = String.valueOf(Calendar.getInstance().getTimeInMillis());
+	private String issueGet(final Entity entity, final Map params) {
 
-		WebTarget target = client.target(DEFAULT_URL).path(entity.path()).queryParam("apikey", apiKey)
-				.queryParam("ts", ts).queryParam("hash", md5(ts));
+		WebTarget target = addParams(client.target(DEFAULT_URL).path(entity.path()), params);
 		Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.get();
 
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 
 		return json.getJSONObject("data").toString();
+	}
+
+	WebTarget addParams(WebTarget target, final Map params) {
+		// default params everyone gets for authentication
+		final String ts = String.valueOf(Calendar.getInstance().getTimeInMillis());
+		target = target.queryParam("apikey", apiKey).queryParam("ts", ts).queryParam("hash", md5(ts));
+
+		// variable
+		if (null != params) {
+			for (Map.Entry<String, Object> entry : (Set<Map.Entry<String, Object>>) params.entrySet()) {
+				target = target.queryParam(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		return target;
 	}
 
 	String md5(final String timestamp) {
