@@ -2,6 +2,7 @@ package com.humegatech.marvelapi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mule.api.annotations.Config;
 import org.mule.api.annotations.Connector;
@@ -12,6 +13,8 @@ import org.mule.api.annotations.Query;
 import org.mule.api.annotations.Source;
 import org.mule.api.annotations.SourceStrategy;
 import org.mule.api.annotations.lifecycle.OnException;
+import org.mule.api.annotations.param.Default;
+import org.mule.api.annotations.param.MetaDataKeyParam;
 import org.mule.api.callback.SourceCallback;
 import org.mule.streaming.PagingConfiguration;
 import org.mule.streaming.ProviderAwarePagingDelegate;
@@ -39,37 +42,39 @@ public class MarvelAPIConnector {
 		return config.getComics();
 	}
 
-//	/**
-//	 * Description for query
-//	 *
-//	 * @param query
-//	 *            The dsql query
-//	 * @return List of elements that match the criteria
-//	 */
-//	@Processor
-//	public List<Object> queryProcessor(@Query String query) {
-//		// TODO
-//		/*
-//		 * MESSAGE PROCESSOR CODE GOES HERE
-//		 */
-//		return new ArrayList<Object>();
-//	}
+	/**
+	 * Description for query
+	 *
+	 * @param query
+	 *            The dsql query
+	 * @return List of elements that match the criteria
+	 */
+	@Processor
+	public List<Object> queryProcessor(@Query String query) {
+		// TODO
+		/*
+		 * MESSAGE PROCESSOR CODE GOES HERE
+		 */
+		return new ArrayList<Object>();
+	}
 
-	// /**
-	// * DataSense processor
-	//
-	// * @param key Key to be used to populate the entity
-	// * @param entity Map that represents the entity
-	// * @return Some string
-	// */
-	// @Processor
-	// public Map<String,Object> addEntity( @MetaDataKeyParam String key,
-	// @Default("#[payload]") Map<String,Object> entity) {
-	// /*
-	// * USE THE KEY AND THE MAP TO DO SOMETHING
-	// */
-	// return entity;
-	// }
+	/**
+	 * DataSense processor
+	 * 
+	 * @param key
+	 *            Key to be used to populate the entity
+	 * @param entity
+	 *            Map that represents the entity
+	 * @return Some string
+	 */
+	@Processor
+	public Map<String, Object> addEntity(@MetaDataKeyParam String key,
+			@Default("#[payload]") Map<String, Object> entity) {
+		/*
+		 * USE THE KEY AND THE MAP TO DO SOMETHING
+		 */
+		return entity;
+	}
 
 	/**
 	 * Custom Message Source

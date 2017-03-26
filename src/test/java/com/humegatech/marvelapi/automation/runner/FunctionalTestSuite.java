@@ -5,32 +5,29 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import com.humegatech.marvelapi.automation.functional.AddEntityTestCases;
-import com.humegatech.marvelapi.automation.functional.GetRecentMessagesTestCases;
-import com.humegatech.marvelapi.automation.functional.GreetTestCases;
-import com.humegatech.marvelapi.automation.functional.QueryProcessorTestCases;
-import com.humegatech.marvelapi.MarvelAPIConnector;
 import org.mule.tools.devkit.ctf.mockup.ConnectorTestContext;
 
-@RunWith(Suite.class)
-@SuiteClasses({
-	AddEntityTestCases.class,
-	GetRecentMessagesTestCases.class,
+import com.humegatech.marvelapi.MarvelAPIConnector;
+import com.humegatech.marvelapi.automation.functional.AddEntityTestCases;
+import com.humegatech.marvelapi.automation.functional.GetComicsTestCases;
+import com.humegatech.marvelapi.automation.functional.GetRecentMessagesTestCases;
+import com.humegatech.marvelapi.automation.functional.QueryProcessorTestCases;
 
-GreetTestCases.class
-	,QueryProcessorTestCases.class
-})
+@RunWith(Suite.class)
+@SuiteClasses({ AddEntityTestCases.class, GetRecentMessagesTestCases.class,
+
+		GetComicsTestCases.class, QueryProcessorTestCases.class })
 
 public class FunctionalTestSuite {
-	
+
 	@BeforeClass
-	public static void initialiseSuite(){
+	public static void initialiseSuite() {
 		ConnectorTestContext.initialize(MarvelAPIConnector.class);
 	}
-	
+
 	@AfterClass
-    public static void shutdownSuite() {
-    	ConnectorTestContext.shutDown();
-    }
-	
+	public static void shutdownSuite() {
+		ConnectorTestContext.shutDown();
+	}
+
 }
