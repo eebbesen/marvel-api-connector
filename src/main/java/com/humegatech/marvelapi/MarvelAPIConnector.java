@@ -22,7 +22,7 @@ import org.mule.streaming.ProviderAwarePagingDelegate;
 import com.humegatech.marvelapi.config.ConnectorConfig;
 import com.humegatech.marvelapi.error.ErrorHandler;
 
-@Connector(name = "marvel-api", friendlyName = "MarvelAPI")
+@Connector(name = "marvel-api", friendlyName = "Marvel API")
 @MetaDataScope(DataSenseResolver.class)
 @OnException(handler = ErrorHandler.class)
 public class MarvelAPIConnector {
@@ -31,20 +31,63 @@ public class MarvelAPIConnector {
 	ConnectorConfig config;
 
 	/**
-	 * Custom processor
+	 * Get Marvel character data
 	 *
-	 * @param friend
-	 *            Name to be used to generate a greeting message.
-	 * @return A greeting message
+	 * @return JSON representation of characters
+	 */
+	@Processor
+	public String getCharacters() {
+		return config.getCharacters();
+	}
+
+	/**
+	 * Get Marvel comic data
+	 *
+	 * @return JSON representation of comics
 	 */
 	@Processor
 	public String getComics() {
 		return config.getComics();
 	}
 
+	/**
+	 * Get Marvel comic creator data
+	 *
+	 * @return JSON representation of comic creators
+	 */
 	@Processor
-	public String getCharacters() {
-		return config.getCharacters();
+	public String getCreators() {
+		return config.getCreators();
+	}
+
+	/**
+	 * Get Marvel Universe event data
+	 *
+	 * @return JSON representation of events in the Marvel Universe
+	 */
+	@Processor
+	public String getEvents() {
+		return config.getEvents();
+	}
+
+	/**
+	 * Get Marvel series data
+	 *
+	 * @return JSON representation of series
+	 */
+	@Processor
+	public String getSeries() {
+		return config.getSeries();
+	}
+
+	/**
+	 * Get Marvel story data
+	 *
+	 * @return JSON representation of stories
+	 */
+	@Processor
+	public String getStories() {
+		return config.getStories();
 	}
 
 	/**
