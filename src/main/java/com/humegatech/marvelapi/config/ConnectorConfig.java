@@ -1,56 +1,67 @@
 package com.humegatech.marvelapi.config;
 
-import org.mule.api.annotations.components.Configuration;
+import java.util.Map;
+
 import org.mule.api.annotations.Configurable;
+import org.mule.api.annotations.components.Configuration;
 import org.mule.api.annotations.param.Default;
+
+import com.humegatech.marvelapi.client.MarvelAPIClient;
+import com.humegatech.marvelapi.client.MarvelAPIClientInterface;
 
 @Configuration(friendlyName = "Configuration")
 public class ConnectorConfig {
+	private MarvelAPIClientInterface client;
+	private Map params;
 
-    /**
-     * Greeting message
-     */
-    @Configurable
-    @Default("Hello")
-    private String greeting;
+	/**
+	 * Marvel Comics API public key
+	 */
+	@Configurable
+	@Default("Hello")
+	private String publicKey;
 
-    /**
-     * Reply message
-     */
-    @Configurable
-    @Default("How are you?")
-    private String reply;
+	/**
+	 * Marvel Comics API private key
+	 */
+	@Configurable
+	@Default("How are you?")
+	private String privateKey;
 
-    /**
-     * Set greeting message
-     *
-     * @param greeting the greeting message
-     */
-    public void setGreeting(String greeting) {
-        this.greeting = greeting;
-    }
+	public void setPublicKey(String publicKey) {
+		this.publicKey = publicKey;
+	}
 
-    /**
-     * Get greeting message
-     */
-    public String getGreeting() {
-        return this.greeting;
-    }
+	public String getPublicKey() {
+		return publicKey;
+	}
 
-    /**
-     * Set reply
-     *
-     * @param reply the reply
-     */
-    public void setReply(String reply) {
-        this.reply = reply;
-    }
+	public void setPrivateKey(String privateKey) {
+		this.privateKey = privateKey;
+	}
 
-    /**
-     * Get reply
-     */
-    public String getReply() {
-        return this.reply;
-    }
+	public String getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setParams(Map params) {
+		this.params = params;
+	}
+
+	public String getComics() {
+		return getClient().getComics();
+	}
+
+	public String getComics(Map params) {
+		return getClient().getComics(params);
+	}
+
+	private MarvelAPIClientInterface getClient() {
+		if (client == null) {
+			client = new MarvelAPIClient(publicKey, privateKey);
+		}
+
+		return client;
+	}
 
 }

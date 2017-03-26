@@ -14,21 +14,13 @@ public class MarvelAPIClientTest {
 	private MarvelAPIClient client;
 
 	@Before
-	public void setUp() {
+	public void setup() {
 		client = new MarvelAPIClient(System.getProperty("MARVEL_KEY"), System.getProperty("MARVEL_SECRET"));
 	}
 
 	@After
 	public void tearDown() {
 		client = null;
-
-		// Hate to do it but having some issues with too quick calling
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Test

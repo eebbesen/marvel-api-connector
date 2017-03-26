@@ -1,16 +1,17 @@
 package com.humegatech.marvelapi.automation.functional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.humegatech.marvelapi.MarvelAPIConnector;
 import org.mule.tools.devkit.ctf.junit.AbstractTestCase;
 
-public class GreetTestCases extends
-		AbstractTestCase<MarvelAPIConnector> {
+import com.humegatech.marvelapi.MarvelAPIConnector;
 
-	public GreetTestCases() {
+public class GetComicsTestCases extends AbstractTestCase<MarvelAPIConnector> {
+
+	public GetComicsTestCases() {
 		super(MarvelAPIConnector.class);
 	}
 
@@ -27,8 +28,7 @@ public class GreetTestCases extends
 	@Test
 	public void verify() {
 		java.lang.String expected = null;
-		java.lang.String friend = null;
-		assertEquals(getConnector().greet(friend), expected);
+		assertEquals(getConnector().getComics(), expected);
 	}
 
 }
