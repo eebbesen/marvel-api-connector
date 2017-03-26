@@ -104,15 +104,30 @@ public class MarvelAPIClient implements MarvelAPIClientInterface {
 	 *            Path to use specifying endpoint
 	 * @return JSON response
 	 */
-	private String issueGet(final Entity entity, final Map params) {
+	private String issueGet(final Entity entity, Map params) {
+		String path = buildPath(entity, params);
 
-		WebTarget target = addParams(client.target(DEFAULT_URL).path(entity.path()), params);
+		WebTarget target = addParams(client.target(DEFAULT_URL).path(path), params);
 		Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.get();
 
 		JSONObject json = new JSONObject(response.readEntity(String.class));
 
 		return json.getJSONObject("data").toString();
+	}
+
+	private String buildPath(final Entity entity, Map params) {
+		String path = entity.path();
+		if (params != null) {
+			// pop entityId if it exists
+			Integer entityId = (Integer) params.remove(entity.entityIdName());
+			// construct path differently if entityId included
+			if (entityId != null) {
+				path += String.format("/%d", entityId);
+			}
+		}
+
+		return path;
 	}
 
 	WebTarget addParams(WebTarget target, final Map params) {
@@ -126,7 +141,7 @@ public class MarvelAPIClient implements MarvelAPIClientInterface {
 				target = target.queryParam(entry.getKey(), entry.getValue());
 			}
 		}
-		
+
 		return target;
 	}
 
