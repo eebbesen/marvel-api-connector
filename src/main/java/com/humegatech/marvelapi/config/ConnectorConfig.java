@@ -56,6 +56,14 @@ public class ConnectorConfig {
 		return getClient().getComics(params);
 	}
 
+	public String getCharacters() {
+		return getClient().getCharacters();
+	}
+
+	public String getCharacters(Map params) {
+		return getClient().getCharacters(params);
+	}
+
 	private MarvelAPIClientInterface getClient() {
 		if (client == null) {
 			client = new MarvelAPIClient(publicKey, privateKey);

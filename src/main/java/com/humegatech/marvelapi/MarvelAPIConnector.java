@@ -42,6 +42,11 @@ public class MarvelAPIConnector {
 		return config.getComics();
 	}
 
+	@Processor
+	public String getCharacters() {
+		return config.getCharacters();
+	}
+
 	/**
 	 * Description for query
 	 *
