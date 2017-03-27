@@ -2,6 +2,7 @@ package com.humegatech.marvelapi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mule.api.annotations.Config;
 import org.mule.api.annotations.Connector;
@@ -12,6 +13,8 @@ import org.mule.api.annotations.Query;
 import org.mule.api.annotations.Source;
 import org.mule.api.annotations.SourceStrategy;
 import org.mule.api.annotations.lifecycle.OnException;
+import org.mule.api.annotations.param.Default;
+import org.mule.api.annotations.param.MetaDataKeyParam;
 import org.mule.api.callback.SourceCallback;
 import org.mule.streaming.PagingConfiguration;
 import org.mule.streaming.ProviderAwarePagingDelegate;
@@ -19,7 +22,7 @@ import org.mule.streaming.ProviderAwarePagingDelegate;
 import com.humegatech.marvelapi.config.ConnectorConfig;
 import com.humegatech.marvelapi.error.ErrorHandler;
 
-@Connector(name = "marvel-api", friendlyName = "MarvelAPI")
+@Connector(name = "marvel-api", friendlyName = "Marvel API")
 @MetaDataScope(DataSenseResolver.class)
 @OnException(handler = ErrorHandler.class)
 public class MarvelAPIConnector {
@@ -28,48 +31,98 @@ public class MarvelAPIConnector {
 	ConnectorConfig config;
 
 	/**
-	 * Custom processor
+	 * Get Marvel character data
 	 *
-	 * @param friend
-	 *            Name to be used to generate a greeting message.
-	 * @return A greeting message
+	 * @return JSON representation of characters
+	 */
+	@Processor
+	public String getCharacters() {
+		return config.getCharacters();
+	}
+
+	/**
+	 * Get Marvel comic data
+	 *
+	 * @return JSON representation of comics
 	 */
 	@Processor
 	public String getComics() {
 		return config.getComics();
 	}
 
-//	/**
-//	 * Description for query
-//	 *
-//	 * @param query
-//	 *            The dsql query
-//	 * @return List of elements that match the criteria
-//	 */
-//	@Processor
-//	public List<Object> queryProcessor(@Query String query) {
-//		// TODO
-//		/*
-//		 * MESSAGE PROCESSOR CODE GOES HERE
-//		 */
-//		return new ArrayList<Object>();
-//	}
+	/**
+	 * Get Marvel comic creator data
+	 *
+	 * @return JSON representation of comic creators
+	 */
+	@Processor
+	public String getCreators() {
+		return config.getCreators();
+	}
 
-	// /**
-	// * DataSense processor
-	//
-	// * @param key Key to be used to populate the entity
-	// * @param entity Map that represents the entity
-	// * @return Some string
-	// */
-	// @Processor
-	// public Map<String,Object> addEntity( @MetaDataKeyParam String key,
-	// @Default("#[payload]") Map<String,Object> entity) {
-	// /*
-	// * USE THE KEY AND THE MAP TO DO SOMETHING
-	// */
-	// return entity;
-	// }
+	/**
+	 * Get Marvel Universe event data
+	 *
+	 * @return JSON representation of events in the Marvel Universe
+	 */
+	@Processor
+	public String getEvents() {
+		return config.getEvents();
+	}
+
+	/**
+	 * Get Marvel series data
+	 *
+	 * @return JSON representation of series
+	 */
+	@Processor
+	public String getSeries() {
+		return config.getSeries();
+	}
+
+	/**
+	 * Get Marvel story data
+	 *
+	 * @return JSON representation of stories
+	 */
+	@Processor
+	public String getStories() {
+		return config.getStories();
+	}
+
+	/**
+	 * Description for query
+	 *
+	 * @param query
+	 *            The dsql query
+	 * @return List of elements that match the criteria
+	 */
+	@Processor
+	public List<Object> queryProcessor(@Query String query) {
+		// TODO
+		/*
+		 * MESSAGE PROCESSOR CODE GOES HERE
+		 */
+		return new ArrayList<Object>();
+	}
+
+	/**
+	 * DataSense processor
+	 * 
+	 * @param key
+	 *            Key to be used to populate the entity
+	 * @param entity
+	 *            Map that represents the entity
+	 * @return Some string
+	 */
+	@Processor
+	public Map<String, Object> addEntity(@MetaDataKeyParam String key,
+			@Default("#[payload]") Map<String, Object> entity) {
+		/*
+		 * USE THE KEY AND THE MAP TO DO SOMETHING
+		 */
+		return entity;
+	}
 
 	/**
 	 * Custom Message Source

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.mule.api.annotations.Configurable;
 import org.mule.api.annotations.components.Configuration;
-import org.mule.api.annotations.param.Default;
 
 import com.humegatech.marvelapi.client.MarvelAPIClient;
 import com.humegatech.marvelapi.client.MarvelAPIClientInterface;
@@ -15,17 +14,15 @@ public class ConnectorConfig {
 	private Map params;
 
 	/**
-	 * Marvel Comics API public key
+	 * Your Marvel Comics API public key
 	 */
 	@Configurable
-	@Default("Hello")
 	private String publicKey;
 
 	/**
-	 * Marvel Comics API private key
+	 * Your Marvel Comics API private key
 	 */
 	@Configurable
-	@Default("How are you?")
 	private String privateKey;
 
 	public void setPublicKey(String publicKey) {
@@ -49,11 +46,27 @@ public class ConnectorConfig {
 	}
 
 	public String getComics() {
-		return getClient().getComics();
+		return getClient().getComics(params);
 	}
 
-	public String getComics(Map params) {
-		return getClient().getComics(params);
+	public String getCharacters() {
+		return getClient().getCharacters(params);
+	}
+
+	public String getCreators() {
+		return getClient().getCreators(params);
+	}
+
+	public String getEvents() {
+		return getClient().getEvents(params);
+	}
+
+	public String getSeries() {
+		return getClient().getSeries(params);
+	}
+
+	public String getStories() {
+		return getClient().getStories(params);
 	}
 
 	private MarvelAPIClientInterface getClient() {
