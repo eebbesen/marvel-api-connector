@@ -3,7 +3,6 @@
 Mule Anypoint Connector for the Marvel API - https://developer.marvel.com/
 
 ## Mule supported versions
-Examples:
 Mule 3.8.x
 
 ## Service or application supported modules
